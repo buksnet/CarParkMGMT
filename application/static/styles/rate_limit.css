@@ -1,0 +1,32 @@
+body {
+    display: flexbox;
+    align-content: center;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;  
+    font-weight: 400;
+    font-style: light;
+    font-variation-settings: 
+        "wdth" 100;
+    width: 100%;
+    height: 100%;
+}
+
+h1{
+    display: flex;
+    justify-content: center;
+}
+
+p {
+    display: flex;
+    justify-content: center;
+}
+
+#time_left{
+    display: flex;
+}
+
+#counter_wrap{
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}

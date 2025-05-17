@@ -1,0 +1,198 @@
+sql:
+  vehicles: >
+    DO $$ BEGIN
+           CREATE TYPE car_status AS ENUM ('используется', 'списан', 'на стоянке', 'на ремонте');
+     EXCEPTION
+         WHEN duplicate_object THEN null;
+     END $$;
+    
+    CREATE TABLE IF NOT EXISTS vehicles (
+      vehicle_id SERIAL PRIMARY KEY,
+      category_id INTEGER NOT NULL,
+      garage_id INTEGER NOT NULL,
+      model VARCHAR(32) NOT NULL,
+      year SMALLINT NOT NULL,
+      reg_number VARCHAR(16) NOT NULL,
+      purchase_date DATE NOT NULL,
+      current_status car_status DEFAULT 'на стоянке',
+      capacity INTEGER DEFAULT 1 CHECK (capacity>0),
+      load_capacity REAL NULL,
+      brand VARCHAR(32) NOT NULL,
+    
+      CONSTRAINT fk_vehicles_vehicle_categories
+      FOREIGN KEY (category_id) REFERENCES vehicle_categories(category_id),
+      CONSTRAINT fk_vehicles_garages
+      FOREIGN KEY (garage_id) REFERENCES garages(garage_id)
+    );
+
+  garages: >
+    CREATE TABLE IF NOT EXISTS garages (
+      garage_id SERIAL PRIMARY KEY,
+      slots INTEGER DEFAULT 0 CHECK (slots>0),
+      description VARCHAR(255) NULL,
+      address VARCHAR(255) NOT NULL
+    );
+
+  vehicle_categories: >
+    CREATE TABLE IF NOT EXISTS vehicle_categories (
+      category_id SERIAL PRIMARY KEY,
+      name VARCHAR(64) NOT NULL,
+      description TEXT NULL
+    );
+
+  driver_assignments: >
+    CREATE TABLE IF NOT EXISTS driver_assignments (
+      assignment_id SERIAL PRIMARY KEY,
+      driver_id INTEGER NOT NULL,
+      vehicle_id INTEGER NOT NULL,
+      date_from DATE NOT NULL,
+      date_to DATE NOT NULL,
+    
+      CONSTRAINT fk_driver_assignments_drivers
+      FOREIGN KEY (driver_id) REFERENCES drivers(driver_id),
+      CONSTRAINT fk_driver_assignments_vehicles
+      FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id)
+    );
+
+  drivers: >
+    DO $$ BEGIN
+        CREATE TYPE driver_status AS ENUM('работает', 'не работает', 'в отпуске', 'на больничном', 'отсутствует');
+    EXCEPTION
+        WHEN duplicate_object THEN null;
+    END $$;
+    
+    CREATE TABLE IF NOT EXISTS drivers (
+      driver_id SERIAL PRIMARY KEY,
+      name VARCHAR(128) NOT NULL,
+      license VARCHAR(10) NOT NULL,
+      hire_date DATE NOT NULL,
+      status driver_status DEFAULT 'не работает'
+    );
+
+  route_assignments: >
+    CREATE TABLE IF NOT EXISTS route_assignments (
+      assignment_id SERIAL PRIMARY KEY,
+      vehicle_id INTEGER NOT NULL,
+      route_id INTEGER NOT NULL,
+      date_from DATE NOT NULL,
+      date_to DATE NOT NULL,
+    
+      CONSTRAINT fk_route_assignments_vehicles
+      FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id),
+      CONSTRAINT fk_route_assignments_routes
+      FOREIGN KEY (route_id) REFERENCES routes(route_id)
+    );
+
+  routes: >
+    CREATE TABLE IF NOT EXISTS routes (
+      route_id SERIAL PRIMARY KEY,
+      name VARCHAR(128) NOT NULL,
+      description TEXT NULL
+    );
+
+  mileage_log: >
+    CREATE TABLE IF NOT EXISTS mileage_log (
+      log_id SERIAL PRIMARY KEY,
+      vehicle_id INTEGER NOT NULL,
+      driver_id INTEGER NOT NULL, 
+      route_id INTEGER NOT NULL,
+    
+      CONSTRAINT fk_mileage_log_drivers
+      FOREIGN KEY (driver_id) REFERENCES drivers(driver_id),
+      CONSTRAINT fk_mileage_log_routes
+      FOREIGN KEY (route_id) REFERENCES routes(route_id)
+    );
+
+  repairs: >
+    CREATE TABLE IF NOT EXISTS repairs (
+      repair_id SERIAL PRIMARY KEY,
+      vehicle_id INTEGER NOT NULL,
+      team_assignment_id INTEGER NOT NULL,
+      part_set_id INTEGER NOT NULL,
+      cost REAL NOT NULL,
+      date DATE NOT NULL,
+      description TEXT NULL,
+      
+      CONSTRAINT fk_repairs_vehicles
+      FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id),
+      CONSTRAINT fk_repairs_team_repair_assignments
+      FOREIGN KEY (team_assignment_id) REFERENCES team_repair_assignments(assignment_id),
+      CONSTRAINT fk_repairs_part_sets
+      FOREIGN KEY (part_set_id) REFERENCES part_sets(set_id)
+    );
+
+  team_repair_assignments: >
+    CREATE TABLE IF NOT EXISTS team_repair_assignments (
+      assignment_id SERIAL PRIMARY KEY,
+      team_id INTEGER NOT NULL,
+    
+      CONSTRAINT fk_team_repair_assignments_teams
+      FOREIGN KEY (team_id) REFERENCES teams(team_id)
+    );
+
+  teams: >
+    CREATE TABLE IF NOT EXISTS teams (
+      team_id SERIAL PRIMARY KEY,
+      supervisor_id INTEGER NOT NULL,
+      name VARCHAR(64)
+    );
+
+  employees: >
+    DO $$ BEGIN
+      CREATE TYPE employee_status AS ENUM('работает', 'не работает', 'в отпуске', 'на больничном', 'отсутствует');
+    EXCEPTION
+      WHEN duplicate_object THEN null;
+    END $$;
+    
+    CREATE TABLE IF NOT EXISTS employees (
+      employee_id SERIAL PRIMARY KEY,
+      team_id INTEGER NOT NULL, 
+      name VARCHAR(64),
+      position VARCHAR(64) DEFAULT 'разнорабочий',
+      hire_date DATE NOT NULL,
+      status employee_status DEFAULT 'не работает',
+    
+      CONSTRAINT fk_employees_teams
+      FOREIGN KEY (team_id) REFERENCES teams(team_id)
+    );
+
+  part_sets: >
+    CREATE TABLE IF NOT EXISTS part_sets (
+      set_id SERIAL PRIMARY KEY,
+      order_id VARCHAR(255) NOT NULL,
+      shop VARCHAR(128) NOT NULL
+    );
+  
+  parts:
+    CREATE TABLE IF NOT EXISTS parts (
+      part_id SERIAL PRIMARY KEY,
+      set_id INTEGER NOT NULL,
+      name VARCHAR(128) NOT NULL,
+      cost REAL NOT NULL,
+      description TEXT NULL,
+    
+      CONSTRAINT fk_parts_part_sets
+      FOREIGN KEY (set_id) REFERENCES part_sets(set_id)
+    );
+
+  add_supervisor_fk:
+    DO $$
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_teams_employees_supervisor') THEN
+        ALTER TABLE teams
+          ADD CONSTRAINT fk_teams_employees_supervisor
+          FOREIGN KEY (supervisor_id) REFERENCES employees(employee_id);
+      END IF;
+    END;
+    $$;
+
+  add_mileage_fk:
+    DO $$
+      BEGIN
+        IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_vehicles_mileage_log') THEN
+          ALTER TABLE mileage_log
+            ADD CONSTRAINT fk_vehicles_mileage_log
+            FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id);
+        END IF;
+      END;
+    $$;
