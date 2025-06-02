@@ -27,7 +27,8 @@
     max-width: 40%;
     box-sizing: border-box;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-content: flex-start;
     gap: 1%;
     overflow-y: auto;
 }

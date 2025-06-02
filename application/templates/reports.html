@@ -5,7 +5,104 @@
 {%endblock%}
 {% block content %}
 
+<div class="content-wrapper">
+    <div class="table-wrap">
+        <div class="table-column-names">
+            <div class="column-name">ID т/с</div>
+            <div class="column-name">Модель</div>
+            <div class="column-name">Гос. номер</div>
+            <div class="column-name">Водитель</div>
+            <div class="column-name">Число маршрутов</div>
+        </div>
+        <div class="rows">
+            <div class="row-wrap">
+                <div class="row">1</div>
+                <div class="row">Toyota Camry</div>
+                <div class="row">АБ123С59</div>
+                <div class="row">Егоров А.С.</div>
+                <div class="row">5</div>
+            </div>
+            <div class="row-wrap">
+                <div class="row">1</div>
+                <div class="row">Toyota Camry</div>
+                <div class="row">АБ123С59</div>
+                <div class="row">Егоров А.С.</div>
+                <div class="row">5</div>
+            </div>
+            <div class="row-wrap">
+                <div class="row">1</div>
+                <div class="row">Toyota Camry</div>
+                <div class="row">АБ123С59</div>
+                <div class="row">Егоров А.С.</div>
+                <div class="row">5</div>
+            </div>
+            <div class="row-wrap">
+                <div class="row">1</div>
+                <div class="row">Toyota Camry</div>
+                <div class="row">АБ123С59</div>
+                <div class="row">Егоров А.С.</div>
+                <div class="row">5</div>
+            </div>
+            <div class="row-wrap">
+                <div class="row">1</div>
+                <div class="row">Toyota Camry</div>
+                <div class="row">АБ123С59</div>
+                <div class="row">Егоров А.С.</div>
+                <div class="row">5</div>
+            </div>
+            <div class="row-wrap">
+                <div class="row">1</div>
+                <div class="row">Toyota Camry</div>
+                <div class="row">АБ123С59</div>
+                <div class="row">Егоров А.С.</div>
+                <div class="row">5</div>
+            </div>
+            <div class="row-wrap">
+                <div class="row">1</div>
+                <div class="row">Toyota Camry</div>
+                <div class="row">АБ123С59</div>
+                <div class="row">Егоров А.С.</div>
+                <div class="row">5</div>
+            </div>
+        </div>
+    </div>
+    <div class="actions-wrap">
+        <div class="action-wrap">
+            <div class="action-image">
+                <img src="{{ url_for('static', filename='images/plus.png') }}">
+            </div>
+            <div class="action-label">
+                Добавить
+            </div>
+        </div>
+        <div class="action-wrap">
+            <div class="action-image">
+                <img src="{{ url_for('static', filename='images/minus.png') }}">
+            </div>
+            <div class="action-label">
+                Удалить
+            </div>
+        </div>
+        <div class="action-wrap">
+            <div class="action-image">
+                <img src="{{ url_for('static', filename='images/pen.png') }}">
+            </div>
+            <div class="action-label">
+                Изменить
+            </div>
+        </div>
+        <div class="action-wrap">
+            <div class="action-image">
+                <img src="{{ url_for('static', filename='images/info.png') }}">
+            </div>
+            <div class="action-label">
+                Подробная информация
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
+<script src="{{ url_for('static', filename='scripts/selectable-fields.js') }}"></script>
 {% endblock %}
