@@ -1,0 +1,121 @@
+.table-wrap {
+    background: linear-gradient(#030C16 0, #0B2D53 72%, #11447C 100%);
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    margin-bottom: 0.5%;
+    padding: 1% 2%;
+    border-radius: 2vh;
+    box-shadow: 4px 4px 4px 1px #2F353B;
+    height: 98%;
+    max-width: 60%;
+    box-sizing: border-box;
+    font-size: calc(0.5vh + 0.5vw);
+    gap: 1%;
+}
+
+.actions-wrap {
+    background: linear-gradient(#030C16 0, #0B2D53 72%, #11447C 100%);
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    margin-bottom: 0.5%;
+    padding: 1% 1%;
+    border-radius: 2vh;
+    box-shadow: 4px 4px 4px 1px #2F353B;
+    height: 98%;
+    max-width: 40%;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1%;
+    overflow-y: auto;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+    gap: 1%;
+}
+
+.table-column-names {
+    color: #FDFDFD;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    padding: 1%;
+}
+
+.column-name {
+    display: flex;
+    flex: 1 1 auto;
+    width: 25%;
+}
+
+.rows {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 1%;
+    overflow-y: auto;
+}
+
+.row-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 2.5vh;
+    padding: 0.5% 1%;
+    background-color: #CECCD7;
+    border-radius: 0.9vh;
+    cursor: pointer;
+}
+
+.row-wrap:hover {
+    background-color: #11447C;
+}
+
+.row-wrap:active {
+    background-color: #ffffff;
+}
+
+#row-selected {
+    background-color: #9a9cff;
+
+}
+
+.row {
+    display: flex;
+    flex: 1 1 auto;
+    width: 20%;
+}
+
+.action-wrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    background: linear-gradient(#B1C4D9, #C8D0D9);
+    padding: 7%;
+    min-width: 30%;
+    max-width: 35%;
+    border-radius: 1.3vh;
+    max-height: 25%;
+    align-items: center;
+    justify-content: space-between;
+    font-size: calc(0.7vh + 0.7vw);
+    cursor: pointer;
+}
+
+.action-wrap:hover {
+    background: linear-gradient(#030a12 0, #0B2D53 72%, #235182 100%);
+    color: #FDFDFD;
+}
+
+.action-label {
+    text-align: center;
+}
