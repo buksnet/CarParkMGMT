@@ -1,11 +1,11 @@
-import os
-from datetime import datetime, timedelta
+from datetime import datetime
 from flask_limiter import RequestLimit
 from dateutils import relativedelta
 from flask import render_template, make_response, Response, url_for
 from application.utils import to_relativedelta
 
 
+# ------------------------------- Обработчики клиентских ошибок -------------------------------------
 def default_limit_reach_responder(request_limit: RequestLimit) -> Response:
     reset_timestamp = datetime.fromtimestamp(request_limit.reset_at)
 

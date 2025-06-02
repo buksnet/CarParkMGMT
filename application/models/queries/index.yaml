@@ -1,0 +1,26 @@
+fetch:
+  get_vehicle_count: >
+    SELECT COUNT(*)
+    FROM vehicles;
+  get_active_vehicle_count: >
+    SELECT COUNT(*)
+    FROM vehicles
+    WHERE current_status='используется';
+
+  get_worker_count: >
+    SELECT COUNT(*)
+    FROM employees;
+
+  get_active_worker_count: >
+    SELECT COUNT(*)
+    FROM employees
+    WHERE status='работает';
+
+  get_driver_count: >
+    SELECT COUNT(*)
+    FROM drivers;
+
+  get_active_driver_count: >
+    SELECT COUNT(*)
+    FROM drivers
+    WHERE status='работает';

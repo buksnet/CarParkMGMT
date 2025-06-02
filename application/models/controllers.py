@@ -4,34 +4,46 @@ from yaml import safe_load as yaml_load
 
 
 # noinspection PyUnresolvedReferences
-class Controller:
+class BaseController:
     def __init__(self):
         self.connection = connect(host=DATABASE_URL, user=DATABASE_USER,
                                   password=DATABASE_PASSWORD, dbname=DATABASE_NAME, port=DATABASE_PORT)
 
-        self.cursor = self.connection.cursor()
-
-    def submit_query(self, query: str, is_unitary: bool = True, do_commit: bool = True) -> tuple:
+    def submit_query(self, query: str, is_unitary: bool = True) -> tuple:
         """
         Отправляет запрос в базу данных и возвращает ответ
 
         :param query: запрос в формате строки
-        :param is_unitary: является ли ожидаемый результат единичным
+        :param is_unitary: является ли ожидаемый результат итерируемым
         :return: кортеж с результатами выполнения запроса
         """
+        with self.connection.cursor() as cursor:
+            cursor.execute(query)
 
-        self.cursor.execute(query)
+            if is_unitary:
+                result: tuple
+                result = cursor.fetchone()
+            else:
+                result: list[tuple] = cursor.fetchall()
 
-        if is_unitary:
-            result: tuple
-            result = self.cursor.fetchone()
-        else:
-            result: list[tuple] = self.cursor.fetchall()
         return result
 
-    def create_all(self):
+
+class Controller(BaseController):
+    def __init__(self):
+        super().__init__()
+        self.__create_all()
+
+    def __create_all(self):
+        """
+        Создаёт все необходимые для работы таблицы в базе данных при необходимости
+
+        :return:
+        """
+
         with open('application/models/queries/tables.yaml') as tables:
             database_tables = yaml_load(tables)['sql']
+
         commits_ordered = [
             database_tables['teams'],
             database_tables['employees'],
@@ -53,8 +65,9 @@ class Controller:
 
         for table in commits_ordered:
             try:
-                self.cursor.execute(table)
-                self.connection.commit()
+                with self.connection.cursor() as cursor:
+                    cursor.execute(table)
+                    self.connection.commit()
 
             except Exception as e:
                 self.connection.rollback()

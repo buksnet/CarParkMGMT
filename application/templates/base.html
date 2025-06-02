@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="static/styles/base.css">
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png">
@@ -9,15 +10,59 @@
     {% block styles %}
     {% endblock %}
     <meta charset="UTF-8">
-        <title>
-            {% block title %}
-            {% endblock %}
-        </title>
-    </head>
-    <body>
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+
+<body>
+    <nav class="mainmenu">
+        <a href="{{ url_for('root') }}" id="logo"><img src="{{ url_for('static', filename='images/logo.png') }}"></a>
+        <div class="menu-section">
+            <a href="/" class="menu-button-wrap">
+                <img src="{{ url_for('static', filename='images/home.svg') }}" id="home-button">
+                <div>Главная</div>
+            </a>
+            <a href="/vehicles" class="menu-button-wrap">
+                <img src="{{ url_for('static', filename='images/car.gif') }}">
+                <div>Транспорт</div>
+            </a>
+            <a href="/routes" class="menu-button-wrap">
+                <img src="{{ url_for('static', filename='images/key.svg') }}">
+                <div>Маршруты</div>
+            </a>
+            <a href="/employees" class="menu-button-wrap">
+                <img src="{{ url_for('static', filename='images/employees.svg') }}">
+                <div>Сотрудники</div>
+            </a>
+            <a href="/repairs" class="menu-button-wrap">
+                <img src="{{ url_for('static', filename='images/wrench.svg') }}">
+                <div>Ремонты Т/С</div>
+            </a>
+            <a href="/garages" class="menu-button-wrap">
+                <img src="{{ url_for('static', filename='images/lock.svg') }}">
+                <div>Гаражные хозяйства</div>
+            </a>
+            <a href="/reports" class="menu-button-wrap">
+                <img src="{{ url_for('static', filename='images/document.svg') }}">
+                <div>Отчёты водителей</div>
+            </a>
+        </div>
+        <div class="menu-section">
+            <a href="/settings" class="menu-button-wrap">
+                <img src="{{ url_for('static', filename='images/cog.svg') }}">
+                <div>Настройки</div>
+            </a>
+        </div>
+
+    </nav>
+    <div class="content">
         {% block content %}
         {% endblock %}
-    </body>
-        {% block scripts %}
-        {% endblock %}
+    </div>
+</body>
+<script src="{{ url_for('static', filename='scripts/base.js') }}" type="text/javascript"></script>
+{% block scripts %}
+{% endblock %}
 </html>

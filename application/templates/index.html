@@ -1,6 +1,119 @@
 {% extends "base.html" %}
 {% block title %} Панель управления {% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+{%endblock%}
 {% block content %}
-<div>CarParkMGMT </div>
-<div><b>Панель управления автопарком</b></div>
+<div class="gauges">
+    <div class="blue-wrap">
+        <div id="car-graph"></div>
+    </div>
+    <div class="gray-wrap">
+        <div id="worker-graph"></div>
+    </div>
+    <div class="blue-wrap">
+        <div id="driver-graph"></div>
+    </div>
+</div>
+<div class="dashboard-data">
+    <div class="log-table-wrap">
+        <div class="table-title">Последние поездки по маршрутам</div>
+        <div class="log-table">
+            <div class="column-names">
+                <div class="column-name">ID т/с</div>
+                <div class="column-name">Номер т/с</div>
+                <div class="column-name">Водитель</div>
+                <div class="column-name">Дата поездки</div>
+                <div class="column-name">Маршрут</div>
+            </div>
+            <div class="rows">
+                <div class="row-wrap">
+                    <div class="row-content">15</div>
+                    <div class="row-content">РА777К59</div>
+                    <div class="row-content">Семёнов А.Е.</div>
+                    <div class="row-content">31.05.25</div>
+                    <div class="row-content">Семёновка-Колыма</div>
+                </div>
+                <div class="row-wrap">
+                    <div class="row-content">15</div>
+                    <div class="row-content">РА777К59</div>
+                    <div class="row-content">Семёнов А.Е.</div>
+                    <div class="row-content">31.05.25</div>
+                    <div class="row-content">Семёновка-Колыма</div>
+                </div>
+                <div class="row-wrap">
+                    <div class="row-content">15</div>
+                    <div class="row-content">РА777К59</div>
+                    <div class="row-content">Семёнов А.Е.</div>
+                    <div class="row-content">31.05.25</div>
+                    <div class="row-content">Семёновка-Колыма</div>
+                </div>
+                <div class="row-wrap">
+                    <div class="row-content">15</div>
+                    <div class="row-content">РА777К59</div>
+                    <div class="row-content">Семёнов А.Е.</div>
+                    <div class="row-content">31.05.25</div>
+                    <div class="row-content">Семёновка-Колыма</div>
+                </div>
+                <div class="row-wrap">
+                    <div class="row-content">15</div>
+                    <div class="row-content">РА777К59</div>
+                    <div class="row-content">Семёнов А.Е.</div>
+                    <div class="row-content">31.05.25</div>
+                    <div class="row-content">Семёновка-Колыма</div>
+                </div>
+                <div class="row-wrap">
+                    <div class="row-content">15</div>
+                    <div class="row-content">РА777К59</div>
+                    <div class="row-content">Семёнов А.Е.</div>
+                    <div class="row-content">31.05.25</div>
+                    <div class="row-content">Семёновка-Колыма</div>
+                </div>
+                <div class="row-wrap">
+                    <div class="row-content">15</div>
+                    <div class="row-content">РА777К59</div>
+                    <div class="row-content">Семёнов А.Е.</div>
+                    <div class="row-content">31.05.25</div>
+                    <div class="row-content">Семёновка-Колыма</div>
+                </div>
+                <div class="row-wrap">
+                    <div class="row-content">15</div>
+                    <div class="row-content">РА777К59</div>
+                    <div class="row-content">Семёнов А.Е.</div>
+                    <div class="row-content">31.05.25</div>
+                    <div class="row-content">Семёновка-Колыма</div>
+                </div>
+                <div class="row-wrap">
+                    <div class="row-content">15</div>
+                    <div class="row-content">РА777К59</div>
+                    <div class="row-content">Семёнов А.Е.</div>
+                    <div class="row-content">31.05.25</div>
+                    <div class="row-content">Семёновка-Колыма</div>
+                </div>
+                <div class="row-wrap">
+                    <div class="row-content">15</div>
+                    <div class="row-content">РА777К59</div>
+                    <div class="row-content">Семёнов А.Е.</div>
+                    <div class="row-content">31.05.25</div>
+                    <div class="row-content">Семёновка-Колыма</div>
+                </div>
+                <div class="row-wrap">
+                    <div class="row-content">15</div>
+                    <div class="row-content">РА777К59</div>
+                    <div class="row-content">Семёнов А.Е.</div>
+                    <div class="row-content">31.05.25</div>
+                    <div class="row-content">Семёновка-Колыма</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="graphs-wrap">
+        тут будэ графiки
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/external/plotly-3.0.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/index.js') }}"></script>
 {% endblock %}

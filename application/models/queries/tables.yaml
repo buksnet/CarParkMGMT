@@ -29,8 +29,8 @@ sql:
     CREATE TABLE IF NOT EXISTS garages (
       garage_id SERIAL PRIMARY KEY,
       slots INTEGER DEFAULT 0 CHECK (slots>0),
-      description VARCHAR(255) NULL,
-      address VARCHAR(255) NOT NULL
+      address VARCHAR(255) NOT NULL,
+      description TEXT NULL
     );
 
   vehicle_categories: >
