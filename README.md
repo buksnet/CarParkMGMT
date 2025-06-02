@@ -1,5 +1,5 @@
 <a id="readme-top"></a>
-[![LICENSE][license-shield]](LICENSE)
+![GitHub License](https://img.shields.io/github/license/buksnet/CarParkMGMT)
 
 
 <div align="center">
